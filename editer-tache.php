@@ -10,7 +10,7 @@ $connexion = new PDO(
 
 $requete = $connexion->prepare(
     'SELECT * FROM tache
-    WHERE id = ?'
+     WHERE id = ?'
 );
 
 $requete->execute([
@@ -18,6 +18,25 @@ $requete->execute([
 ]);
 
 $tache = $requete ->fetch();
+
+if(isset($_POST['valider'])){
+
+    $requete = $connexion->prepare(
+    'UPDATE tache
+     SET titre = ?, contenu = ?
+     WHERE id = ?'
+    );
+
+    $requete->execute([
+        $_POST['titre'],
+        $_POST['contenu'],
+        $_GET['id'],
+    ]);
+
+     // redirection vers la page de taches "liste.php"
+     header('location: liste.php');
+
+}
 
 ?>
 
